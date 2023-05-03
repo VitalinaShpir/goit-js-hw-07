@@ -42,6 +42,9 @@ images.forEach((image) => {
     lightbox.classList.add("active");
     const img = document.createElement("img");
     img.src = image.srs;
+    while (lightbox.firstChild) {
+        lightbox.removeChild(img)
+    }
     lightbox.appendChild(img);
   });
 });
