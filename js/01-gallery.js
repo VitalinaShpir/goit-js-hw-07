@@ -36,23 +36,31 @@ const lightbox = document.createElement("div");
 lightbox.id = "lightbox";
 document.body.appendChild(lightbox);
 
+
+
 const images = document.querySelectorAll("img");
 images.forEach((image) => {
   image.addEventListener("click", (e) => {
     lightbox.classList.add("active");
-    const img = document.createElement("img");
-    img.src = image.srs;
-    while (lightbox.firstChild) {
-        lightbox.removeChild(img)
-    }
+    const img = document.createElement('img');
     lightbox.appendChild(img);
-  });
+   
+    img.src = image.dataset.source;
+    console.log(image.dataset.source)
+
+   
+  })
 });
 
 lightbox.addEventListener('click', e => {
-    if(e.target !== e.currentTarget) return
+  if(e.target !== e.currentTarget) return
+
     lightbox.classList.remove("active");
+
+    const imgToRemove = lightbox.querySelector('img')
+    imgToRemove.remove()
+    
+  
 })
 
-// const imgItem = galleryItems.map(({ preview, original, description }) => `<img src="${original}" alt="${description}">`).join('');
-// console.log(imgItem)
+
