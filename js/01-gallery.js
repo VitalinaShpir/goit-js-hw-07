@@ -21,7 +21,7 @@ const listItem = galleryItems
 </li>`
   )
   .join("");
-// console.log(listItem);
+
 
 document.querySelector(".gallery").insertAdjacentHTML("beforeend", listItem);
 
@@ -42,25 +42,34 @@ const images = document.querySelectorAll("img");
 images.forEach((image) => {
   image.addEventListener("click", (e) => {
     lightbox.classList.add("active");
+
     const img = document.createElement('img');
     lightbox.appendChild(img);
    
     img.src = image.dataset.source;
-    console.log(image.dataset.source)
-
    
   })
 });
 
 lightbox.addEventListener('click', e => {
-  if(e.target !== e.currentTarget) return
-
-    lightbox.classList.remove("active");
-
-    const imgToRemove = lightbox.querySelector('img')
-    imgToRemove.remove()
-    
+  if(e.target === e.currentTarget) return
+  closeModal()
   
 })
 
+function closeModal() {
+  lightbox.classList.remove("active");
+
+  const imgToRemove = lightbox.querySelector('img')
+  imgToRemove.remove()
+
+  // window.removeEventListener("keydown", closeByEsc);
+}
+
+// function closeByEsc({ code }) {
+//   if (code === "Escape") {
+//     closeModal();
+//   }
+//   console.log(closeByEsc)
+// }
 
