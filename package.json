@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "simple": "^0.2.0",
+    "simplelightbox": "^2.13.0"
+  }
+}
