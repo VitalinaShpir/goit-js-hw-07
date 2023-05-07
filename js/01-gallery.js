@@ -1,10 +1,8 @@
 import { galleryItems } from "./gallery-items.js";
-// Change code below this line
 
-// console.log(galleryItems);
 
-// const galleryList = document.querySelector('.gallery')
-// console.log(galleryList);
+const galleryList = document.querySelector('.gallery')
+
 
 const listItem = galleryItems
   .map(
@@ -25,51 +23,30 @@ const listItem = galleryItems
 
 document.querySelector(".gallery").insertAdjacentHTML("beforeend", listItem);
 
-const link = document.querySelectorAll(".gallery__link");
-link.forEach((element) =>
-  element.addEventListener("click", function (event) {
-    event.preventDefault();
+galleryList.addEventListener("click", onGalleryItemClick)
+
+function onGalleryItemClick(event) {
+  event.preventDefault();
+  if(event.target.nodeName !== 'IMG'){
+    return
+  }
+ 
+  const instance = basicLightbox.create(
+    `<img src="${event.target.dataset.source}" alt="${event.target.alt}">`,
+
+    {onShow: (instance) => {window.addEventListener("keydown", closeByEsc)},
+
+	onClose: (instance) => {window.removeEventListener("keydown", closeByEsc)}
   })
-);
-
-const lightbox = document.createElement("div");
-lightbox.id = "lightbox";
-document.body.appendChild(lightbox);
+ 
+instance.show()
 
 
+function closeByEsc({ code }) {
+  if (code === "Escape") {
+    instance.close();
+  }}}
 
-const images = document.querySelectorAll("img");
-images.forEach((image) => {
-  image.addEventListener("click", (e) => {
-    lightbox.classList.add("active");
 
-    const img = document.createElement('img');
-    lightbox.appendChild(img);
-   
-    img.src = image.dataset.source;
-   
-  })
-});
 
-lightbox.addEventListener('click', e => {
-  if(e.target === e.currentTarget) return
-  closeModal()
-  
-})
-
-function closeModal() {
-  lightbox.classList.remove("active");
-
-  const imgToRemove = lightbox.querySelector('img')
-  imgToRemove.remove()
-
-  // window.removeEventListener("keydown", closeByEsc);
-}
-
-// function closeByEsc({ code }) {
-//   if (code === "Escape") {
-//     closeModal();
-//   }
-//   console.log(closeByEsc)
-// }
 
